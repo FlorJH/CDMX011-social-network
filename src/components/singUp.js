@@ -1,4 +1,4 @@
-import { onNavigate } from '../main.js';
+import { onNavigate } from '../routes.js';
 
 export const toViewSingUp = (container) => {
   const html = ` <section class="container signup-form">
