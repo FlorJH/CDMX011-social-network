@@ -84,7 +84,7 @@ const postContainer = document.getElementById('postContainer');
      <hr id="blackLine">
      <div class="usuarioPost">
      <div class="user">
-     <p>${userUID.email}</p>
+     <p>${doc.data().user}</p>
      <p>Fecha</p>
      </div>
      <div class="likes"><input src='../img/heart.png' class='btn_like'  type='image' /> </div>
