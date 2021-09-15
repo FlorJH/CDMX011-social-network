@@ -50,7 +50,7 @@ posting.addEventListener('submit', async (e) => {
 
     };
 
-    // closeModal();
+    closeModal();
     posting.reset();
     textShare.focus();
 
@@ -111,7 +111,7 @@ export const editPost= (status, text, id)=>{
     `
     // closeModal();
     
-    let editStatus = false;
+    let editStatus = true;
     
     const posting = document.getElementById('postForm');
     
@@ -137,7 +137,7 @@ posting.addEventListener('submit', async (e) => {
 
   };
 
-  // closeModal();
+  closeModal();
   posting.reset();
   textShare.focus();
 
