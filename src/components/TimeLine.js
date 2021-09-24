@@ -149,14 +149,14 @@ export const toViewtimeline = (container) => {
                 });
 
                 btn.src = '../img/emptylike.png';
-                    console.log("le quité mi like");
+                    //console.log("le quité mi like");
               }else {
                 btn.src = '../img/like.png';
                 likesFb.update({
                       likes: firebase.firestore.FieldValue.arrayUnion(uidUser)
                     });
                     
-                    console.log("le di like");
+                    //console.log("le di like");
               }
           });
         });
@@ -164,15 +164,15 @@ export const toViewtimeline = (container) => {
      
 
             //Editar post//
-            const btnEdit = postContainer.querySelectorAll('.edit');
-            btnEdit.forEach(btn => {
+            const btnEdit = postContainer.querySelectorAll('.edit'); //Espera el evento click para generar el modal de editar post
+            btnEdit.forEach(btn => { //Se identifica a cuál se le dio click
               btn.addEventListener('click', async (e) => {
                 const doc = await getPost(e.target.dataset.id);
                 id = doc.id;
                 
               showModal.style.visibility = "visible";
-              editPost(doc.data().textShare, id );
-             closeModal();
+              editPost(doc.data().textShare, id ); //Se le pasa el texto del post junto con su id
+             closeModal();  //Se le pasa la funcionalidad de close modal para que se active 
               });
             });
 
@@ -181,7 +181,7 @@ export const toViewtimeline = (container) => {
           //to create a new post
             const toNewPost = document.getElementById('newPost');
             toNewPost.addEventListener('click', () => {
-              console.log('click evento');
+              //console.log('click evento');
               showModal.style.visibility = "visible";
           
               //llamar modal

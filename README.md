@@ -64,6 +64,7 @@ Interfaz para computadoras:
 <img src="./src/img-readme/final-view-deskt-1.png" alt="interfaz-desktop-home"/>
 <img src="./src/img-readme/final-view-deskt-2.png" alt="interfaz-desktop-login"/>
 <img src="./src/img-readme/final-view-deskt-3.png" alt="interfaz-desktop-signup"/>
+<img src="./src/img-readme/final-view-deskt-4.png" alt="interfaz-desktop-timeline"/>
 
 
 
