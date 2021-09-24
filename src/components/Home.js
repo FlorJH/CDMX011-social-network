@@ -40,7 +40,7 @@ export const toViewHome = (container) => {
   toLogIn.addEventListener('click', (e) => {
     e.preventDefault();
     onNavigate('/LogIn');
-    //stateUser();
+    
   });
 
   //Función para iniciar sesión con Google
@@ -49,8 +49,8 @@ export const toViewHome = (container) => {
     continueGoogle()
     .then((result) => {
       onNavigate('/TimeLine');
-      console.log(result);
-      console.log('google done');
+      //console.log(result);
+      //console.log('google done');
     }).catch((error) => {
       console.log(error.message);
     });
@@ -62,13 +62,13 @@ export const toViewHome = (container) => {
   toContinueGitHub.addEventListener('click', (e) => {
     e.preventDefault();
     continueGitHub()
-    .then((result) => {
+    .then(() => {
       onNavigate('/TimeLine');
-      console.log('github login');
+      //console.log('github login');
      
     }).catch((error)=>{
       console.log(error.message);
-      console.log('algo no está bieeen');
+      //console.log('algo no está bieeen');
     })
   });
 };

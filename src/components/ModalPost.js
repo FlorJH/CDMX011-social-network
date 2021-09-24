@@ -65,7 +65,7 @@ export const editPost = (text, id) => {
 </form>`;
 
   let editPosting = document.querySelectorAll('#postForm');
-  console.log(editPosting);
+  //console.log(editPosting);
 
   editPosting.forEach(editPost => {
     editPost.addEventListener('submit', async (e) => {
@@ -91,7 +91,7 @@ export const editPost = (text, id) => {
 export const closeModal = () => {
 
   span = document.querySelectorAll(".close");
-  console.log(span)
+  //console.log(span)
   span.forEach(function (close) {
     close.addEventListener('click', function () {
       showModal.style.visibility = "hidden";

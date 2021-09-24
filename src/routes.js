@@ -20,15 +20,15 @@ export const routes = {
 
 export const onNavigate = (pathname) => {
 
-    window.history.pushState({},
-        pathname,
-        window.location.origin + pathname
+    window.history.pushState({}, //estado vacío
+        pathname, //título pathname
+        window.location.origin + pathname //ruta que queremos asignar concatenando el pathname
     );
     const component = routes[pathname]
-    component(rootDiv);
+    component(rootDiv); //se renderiza el html
 }
 
-window.onpopstate = () => {
+window.onpopstate = () => { //guarda una copia de navegación en el historial
     const component = routes[window.location.pathname]
     component(rootDiv);
 }
