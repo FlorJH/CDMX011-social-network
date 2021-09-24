@@ -2,7 +2,7 @@
 
 import { onNavigate } from '../routes.js';
 import { modal, closeModal, showModal, editPost } from './ModalPost.js';
-import { logOutUser, onGetPost, getPost, updatePost, deletePost,addLikes, savePost, disLike, actualUser } from '../lib/fireBase.js';
+import { logOutUser, onGetPost, getPost, deletePost, addLikes, disLike, actualUser } from '../lib/fireBase.js';
 //import { async } from 'regenerator-runtime';
 
 
@@ -18,17 +18,13 @@ export const toViewtimeline = (container) => {
     <hr id="witheBorder">
     </header>
     <nav class="navBar" > 
-    <div><input src='../img/homeL.png' class='btnNavBarMovil'  type='image' /></div>
-    <div><input src='../img/post1.png' class='btn_mas' id='newPost' type='image'/></div>
-    <div><input src='../img/logOutt.png' id='logOut' class="btnNavBarMovil" type='image' /></div>
+    <div><input src='../img/homeL.png' class='btnNavBar' id="ToGoHome" type='image' /></div>
+    <div><input src='../img/post1.png' class='btn_mas' id='newPost' type='image' /></div>
+    <div><input src='../img/logOutt.png' id='logOut' class="btnNavBar" type='image' /></div>
     </nav> 
 
     <section class="TimeContainer" id="section">
-    <form  id="postForm1">
-       <!-- <textarea text="textArea" class="textPost1" id="textPost1" rows="5" cols="40" maxlength="500" placeholder="Post something :)" required ></textarea><br>
-        <input type="submit" id="buttonNewPost"  value="Share" /> -->
-        
-    </form>
+    
     <div class= "postContainer"  id = "postContainer"></div>
     
   </section>
@@ -37,18 +33,11 @@ export const toViewtimeline = (container) => {
   </div>
 `;
 
-// let imagenEmptyLike = "../img/emptylike.png"
-// let imagenLike ="../img/like.png"
-// let btnValue = ""
-// const imgLike = (boo) => {
-//   btnValue = boo
-//  }
-
   // stateUser();
   firebase.auth().onAuthStateChanged((getUser) => {
 
     if (getUser) {
-    let editStatus = false;
+    // let editStatus = false;
     let id = '';
     container.innerHTML = html
 
@@ -77,7 +66,7 @@ export const toViewtimeline = (container) => {
             //Obtener id de cada post//
             const postData = doc.data();
             postData.id = doc.id;
-        
+            const likeUser = postData.likes.includes(actualUser());
             const postLikes= doc.data().likes.length; //longitud del array de likes
             //console.log(postLikes);
 
@@ -95,7 +84,7 @@ export const toViewtimeline = (container) => {
       <div class="verMas"> 
       <nav>
       <input type="checkbox" id="${postData.id}" class="btnMenu menu" ></input>
-      <label for="${postData.id}" class="labelPost ${postData.uid}" ></label>
+      <label for="${postData.id}" class="${postData.uid}" ></label>
       
       <ul class='menuToPost'>
         <li><button class  = "btn_delete delete" data-id="${postData.id}" >Delete</button></li>
@@ -105,139 +94,110 @@ export const toViewtimeline = (container) => {
 
      </div>
       </div>
-      <hr id="blackLine">
       <div class="postText">
         <h2>${doc.data().textShare}</h2>
       </div>
-      <hr id="blackLine">
-        <div class="usuarioPost">
-          <div class="likes"><input id='like' src='../img/emptylike.png'  data-id="${postData.id}" name="like" class='btn_like' type='image' value="${postData.id}"/>
-         
-        </div> 
-        <div class="countLike">${postLikes} </div>
+      <div class="usuarioPost">
+      <div class="likes"><input id='like' src='${likeUser ? '../img/like.png' : '../img/emptylike.png'}'  data-id="${postData.id}" name="like" class='btn_like' type='image' value="${postData.id}"/></div> 
+      <div class="countLike">${postLikes} </div>
+  
+
       </div>
         </div>
-        `;
-    
-            const labelOptions = document.querySelectorAll(`.${postData.uid}`);//como mandarle id en lugar de nombre de clase 
-            //console.log(labelOptions)
+
+        `
+            const labelOptions = document.querySelectorAll(`.${postData.uid}`);
+
 
             // console.log(postEmail);
             if (actualUser() == postUid) {
               labelOptions.forEach(btn2 => {
                 btn2.innerHTML=`<div class='labelPost' >...</div>`;
+                
               })
-              // document.getElementsByClassName("labelPost").style.display= "none";
             }
             
             //Borrar post//
             const btnDel = postContainer.querySelectorAll('.delete');
             btnDel.forEach(btn => {
-              btn.addEventListener('click', async (e) => {
-                //console.log(e.target.dataset.id);// es el ID del post clickeado
-                await deletePost(e.target.dataset.id);
+              btn.addEventListener('click',  async(e) => {
+                let confirmDelete = confirm ( 'Are you sure?');
+                if (confirmDelete) {
+                  await deletePost(e.target.dataset.id);
+                }
               });
             });
 
             //Botón like//
                    
-          const btnLike = postContainer.querySelectorAll('#like');
-          btnLike.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-              //e.preventDefault();
-              //console.log(btn.value); //id de cada post al dar click al botón de like
-            //  const likeArray =  postData.likes;
-            //  console.log(likeArray);
-            //  const likeUser = likeArray.includes(actualUser());
-            //  console.log(likeUser);
+                      
+            const btnLike = postContainer.querySelectorAll('.likes');
+            btnLike.forEach(btn => {
+              btn.addEventListener('click', async (e) => {
+              const docpost =  await getPost(e.target.dataset.id);
+              console.log(docpost);
+                const postEdit = docpost.data();
+                id = docpost.id;
+                const uidUser = firebase.auth().currentUser.uid;
+                const likesFb = firebase.firestore().collection('posts').doc(id)
+                //console.log(docpost)
+                const likeArray = postEdit.likes;
+  
+              if(likeArray.includes(uidUser)) {
+                likesFb.update({
+                  likes: firebase.firestore.FieldValue.arrayRemove(uidUser) //se tendría que agregar el uid
+                });
 
-              // if(likeUser === true){
-              //   addLikes(btn.value);
-              //   btn.src = '../img/like.png';
-              //   console.log(':)')
-              // } else {
-              //   disLike(btn.value)
-              //   console.log(':(')
-              // }
-
-              if(btn.src === "http://localhost:5000/img/emptylike.png"){
-                addLikes(btn.value);
-                btn.src = '../img/like.png';
-                console.log('clicked');   
-                
-                
-              }else {
-                disLike(btn.value);
                 btn.src = '../img/emptylike.png';
-                console.log('unclicked');
+                    //console.log("le quité mi like");
+              }else {
+                btn.src = '../img/like.png';
+                likesFb.update({
+                      likes: firebase.firestore.FieldValue.arrayUnion(uidUser)
+                    });
+                    
+                    //console.log("le di like");
               }
-              
-              
-            });
+          });
+        });
+     
+     
 
-          });
-          
-           
-          });
             //Editar post//
-            const btnEdit = postContainer.querySelectorAll('.edit');
-            btnEdit.forEach(btn => {
+            const btnEdit = postContainer.querySelectorAll('.edit'); //Espera el evento click para generar el modal de editar post
+            btnEdit.forEach(btn => { //Se identifica a cuál se le dio click
               btn.addEventListener('click', async (e) => {
                 const doc = await getPost(e.target.dataset.id);
-                // console.log(getPost());
-                editStatus = true;
                 id = doc.id;
                 
               showModal.style.visibility = "visible";
-              editPost(editStatus,doc.data().textShare, id );
-                
-                
-                // posting["textPost"].value = doc.data().textShare;
-                // posting['buttonNewPost'].value = 'Update';
+              editPost(doc.data().textShare, id ); //Se le pasa el texto del post junto con su id
+             closeModal();  //Se le pasa la funcionalidad de close modal para que se active 
               });
             });
 
-        });  
+        });  });
 
           //to create a new post
             const toNewPost = document.getElementById('newPost');
             toNewPost.addEventListener('click', () => {
-              console.log('click evento');
+              //console.log('click evento');
               showModal.style.visibility = "visible";
-            // container.innerHTML=`<div id="modal" class="modal"></div>`;
+          
               //llamar modal
-              modal();
-              // closeModal();
+              modal(actualUser());
+              closeModal();
       
             });
+
+            //To go home
+
+            const home= document.getElementById('ToGoHome');
+            home.addEventListener('click', () =>{
+              onNavigate('/TimeLine');
+            })
     
-    //Share post
-    //   posting.addEventListener('submit', async (e) => {
-    //   e.preventDefault();
-
-    //   //console.log("Share");
-    //   const textShare= posting['textPost'];
-    //   //console.log(textShare);
-
-    //   if (!editStatus) {
-    //     await savePost(textShare.value);
-    //   } else {
-    //     await updatePost(id, {
-    //       textShare: textShare.value
-    //     });
-
-    //     editStatus = false;
-    //     id = '';
-    //     posting['buttonNewPost'].value = 'Share';
-
-    //   };
-
-
-    //   posting.reset();
-    //   textShare.focus();
-
-    // }); 
-  
+    
     }else {
           onNavigate('/');
         }
