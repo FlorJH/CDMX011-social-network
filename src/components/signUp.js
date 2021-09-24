@@ -47,12 +47,12 @@ export const toViewSignUp = (container) => {
 
         e.preventDefault();
         e.stopPropagation();
-        console.log('estoy evitando el reset');
-        console.log(email, password);
+        //console.log('estoy evitando el reset');
+        //console.log(email, password);
 
         register(email, password)
         .then(() => {
-          console.log('then');
+          //console.log('then');
             onNavigate('/TimeLine');
         })
 

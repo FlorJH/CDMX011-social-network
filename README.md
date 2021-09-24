@@ -16,6 +16,10 @@ Elaborada por:
  - Nancy Janet Díaz Menchaca
  - Paola Colette Ordoñez Rodríguez 
 
+### Vista final
+Link del proyecto:
+    https://pic-art-1c2c5.web.app/
+
 ## 2. Definición del producto
 
 Se realizó  una red social dirigida a artistas y público en general interesados en este tema, consistió en construir una single page aplication (SPA) donde los contenidos cargaran de una manera más fluida y sencilla para el usuario, sin necesidad de tener que redirigir a otras páginas en todo momento. Además de ser ua aplicación responsiva, se puede interactuar con ella desde dispositivos móviles y computadoras.
@@ -64,6 +68,7 @@ Interfaz para computadoras:
 <img src="./src/img-readme/final-view-deskt-1.png" alt="interfaz-desktop-home"/>
 <img src="./src/img-readme/final-view-deskt-2.png" alt="interfaz-desktop-login"/>
 <img src="./src/img-readme/final-view-deskt-3.png" alt="interfaz-desktop-signup"/>
+<img src="./src/img-readme/final-view-deskt-4.png" alt="interfaz-desktop-timeline"/>
 
 
 
