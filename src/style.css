@@ -54,9 +54,7 @@ html {
    .menu{
     display: none;
   }
-  .menu:checked  ~ ul{
-    display:block;
-  }
+  
 .labelPost {
     box-sizing: border-box;
     visibility: visibility;
@@ -89,6 +87,7 @@ html {
     margin-top:0;
     padding: 0;
     margin-right: 10px;
+    display:block;
   }
 
   /*Estilo cuando el mouse pasa encima de cada link del menu*/
@@ -490,7 +489,7 @@ footer {
 
 @media screen and (min-width: 700px) {
     .homeContainer {
-        background: url("./img/wallpaper.png"); ;
+        background: url("./img/wallpaper.png"); 
     }
     .root {
         width: 900px;
@@ -575,6 +574,8 @@ footer {
         padding: 10px;
         margin-top: 10px;
         width: 540px;
+        margin-left: 20px;
+        outline:0px none transparent;
     }
     .TextArea {
         align-content: center;
@@ -621,10 +622,7 @@ footer {
         align-self: center;
         margin-left: -100px;
     }
-    #textPost {
-        margin-left: 20px;
-        outline:0px none transparent;
-    }
+  
     .modalTitle {
         padding-left: 10px;
     }
